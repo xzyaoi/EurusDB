@@ -8,7 +8,7 @@ from bokeh.io import show
 from bokeh.layouts import column
 from bokeh.models import ColumnDataSource, CustomJS, Select
 from bokeh.plotting import figure
-
+import sys
 
 def visualize(filename):
     df = pd.read_csv(filename)

@@ -66,5 +66,3 @@ if __name__ == "__main__":
 
     tree = ScipyKDTreeModel(leafsize=1000)
     tree.build(x_train)
-
-    x_test
