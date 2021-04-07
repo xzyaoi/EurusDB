@@ -29,7 +29,14 @@ struct Values(Vec<(Vec<u8>, Vec<u8>)>);
 
 impl Node {
     fn delete(&mut self, key: &[u8]) {
+        match self {
+            Self::Root(children) => {
+                children.delete(key);
+                while children.len() == 1 {
 
+                }
+            }
+        }
     }
     fn get(&self, key: &[u8]) {
 
@@ -42,4 +49,20 @@ impl Node {
     fn last(&self) {
 
     }
+}
+
+impl Children {
+    fn new(order: usize) -> Self {
+
+    }
+    fn empty() -> Self {
+
+    }
+    fn delete(&mut self, key: &[u8]) {
+
+    }
+    fn get(&self, key: &[u8]) -> Option <Vec<u8>> {
+
+    }
+    
 }
