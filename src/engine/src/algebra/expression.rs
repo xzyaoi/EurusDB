@@ -3,7 +3,7 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-use super::{Row, Value}
+use super::{Row, Value};
 use crate::error::{Error, Result};
 
 use regex::Regex;
@@ -47,9 +47,15 @@ impl Expression {
     pub fn evaluate(&self, row: Option<&Row>) -> Result<Value> {
         use Value::*;
         Ok(match self {
-            // For constants
+            // Constants
             Self::Constance(c) => c.clone(),
             Self::Field(i,_) => row.and_then(|row| row.get(*i).cloned()).unwrap_or(Null),
+
+            // Logical operations
+            Self::And(lhs, rhs)=> match(lhs.evaluate(row)?, rhs.evaluate(row)?){
+                (Boolean(lhs), Boolean(rhs)) => Boolean(lhs && rhs),
+                (Boolean(lhs), Null) if !lhs => Boolean(false),
+            }
         })
     }
 }

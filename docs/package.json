@@ -1,0 +1,19 @@
+{
+  "name": "EurusDB",
+  "version": "0.0.1",
+  "description": "Fully Learned Database for OLAP",
+  "main": "index.js",
+  "authors": {
+    "name": "Xiaozhe Yao",
+    "email": "askxzyao@gmail.com"
+  },
+  "repository": "autoai-org/EurusDB",
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  }
+}
