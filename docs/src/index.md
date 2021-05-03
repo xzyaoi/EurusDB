@@ -9,7 +9,7 @@ features:
   details: Indexes, planner and other components are driven by machine learning algorithms.
 - title: Pluggable and Extendable
   details: Easily replace indexes with other techniques.
-- title: Feature 3 Title
-  details: Feature 3 Description
+- title: Scalable
+  details: Horizontally and vertically scalable.
 footer: Made by Xiaozhe Yao with ❤️
 ---
