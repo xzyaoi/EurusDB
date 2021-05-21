@@ -8,8 +8,8 @@ from timeit import default_timer as timer
 import numpy as np
 
 import src.indexing.utilities.metrics as metrics
-from src.indexing.learning.fully_connected_network import FullyConnectedNetwork
-# from src.indexing.learning.pt_fcn import FullyConnectedNetwork
+#from src.indexing.learning.fully_connected_network import FullyConnectedNetwork
+from src.indexing.learning.pt_fcn import FullyConnectedNetwork
 from src.indexing.models import BaseModel
 from src.indexing.utilities.dataloaders import normalize
 
