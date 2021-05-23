@@ -1,9 +1,13 @@
+# Copyright (c) 2021 Xiaozhe Yao et al.
+#
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from torch.nn.modules import padding
 import torch.optim as optim
-from torch.utils.data import TensorDataset, DataLoader
+
 
 # The Beta Finder Network
 class BFNet(nn.Module):
@@ -11,19 +15,23 @@ class BFNet(nn.Module):
         super(BFNet, self).__init__()
         self.classes = 2
         # Convolution
-        self.conv1 = nn.Conv2d(1, 10, kernel_size=(10,2), stride=(3,1), padding=(0,1))
+        self.conv1 = nn.Conv2d(1,
+                               10,
+                               kernel_size=(10, 2),
+                               stride=(3, 1),
+                               padding=(0, 1))
         self.relu1 = nn.ReLU(inplace=True)
 
         # Fully-connected for classification
-        self.fc1 = nn.Conv2d(10, classes, kernel_size=(10,1))
+        self.fc1 = nn.Conv2d(10, classes, kernel_size=(10, 1))
 
         # ConvTranspose
-        self.upscore1 = nn.ConvTranspose2d(classes, 10, kernel_size=(10,1))
+        self.upscore1 = nn.ConvTranspose2d(classes, 10, kernel_size=(10, 1))
         self.upscore2 = nn.ConvTranspose2d(10,
                                            1,
-                                           kernel_size=(10,1),
-                                           stride=(3,1),
-                                           padding=(0,1),
+                                           kernel_size=(10, 1),
+                                           stride=(3, 1),
+                                           padding=(0, 1),
                                            bias=True)
 
     def forward(self, x):
@@ -33,7 +41,6 @@ class BFNet(nn.Module):
         x = self.upscore1(x)
         x = self.upscore2(x)
         return x
-
 
 
 class BFModel(object):
@@ -59,7 +66,7 @@ class BFModel(object):
             loss = self.loss(ypred, labels)
             loss.backward()
             self.optimizer.step()
-            print("epoch: {} Loss:{}".format(epoch, loss),end="\n")
+            print("epoch: {} Loss:{}".format(epoch, loss), end="\n")
         print("Finished trainning...")
         torch.save(self.net.state_dict(), './bfnet.model')
 

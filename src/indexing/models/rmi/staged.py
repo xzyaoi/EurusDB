@@ -9,7 +9,6 @@ This file describes how staged model, i.e. recursive model works.
 @updated: 14. Mar. 2021.
 '''
 
-import sys
 from timeit import default_timer as timer
 from typing import List
 
@@ -21,9 +20,10 @@ from src.indexing.models.ml.polynomial_regression import PolynomialRegression
 from src.indexing.models.nn.fcn import FCNModel
 from src.indexing.models.trees.b_tree import BTreeModel
 
+
 class StagedModel(BaseModel):
-    def __init__(self, model_types, num_models, page_size) -> None:
-        super().__init__("Staged Model", page_size)
+    def __init__(self, model_types, num_models) -> None:
+        super().__init__("Staged Model")
         self.num_of_stages = len(model_types)
         self.num_of_models = num_models
         if not len(self.num_of_models) == self.num_of_stages:
@@ -40,12 +40,11 @@ class StagedModel(BaseModel):
         elif model_type == 'quadratic':
             model = PolynomialRegression(2)
         elif model_type == 'b-tree':
-            model = BTreeModel(page_size=self.page_size, degree=10)
+            model = BTreeModel(degree=10)
         elif model_type == 'fcn':
             model = FCNModel(layers=[1, 4, 4, 1],
                              activations=['relu', 'relu', 'relu'],
                              epochs=2000,
-                             page_size=self.page_size,
                              lr=0.001)
         else:
             raise ValueError("Unsupported Model Type")
@@ -97,13 +96,13 @@ class StagedModel(BaseModel):
                     else:
                         # there is no x and y allocated
                         # by default, give it all the training data
-                        number_unused_model = number_unused_model+1
+                        number_unused_model = number_unused_model + 1
 
                         # print("[WARN] The model {}-{} is not given any data".
                         #       format(stage + 1, next_model_id))
                         train_datas[stage + 1].append((None, None))
                 print("unused model at stage {}: {}".format(
-                    stage+1, number_unused_model))
+                    stage + 1, number_unused_model))
         end_time = timer()
 
         y_pred = []
@@ -114,7 +113,7 @@ class StagedModel(BaseModel):
 
     def acceptable_next_model(self, raw_next_model_id, stage, isLeaf=False):
         if not isLeaf:
-            stage=stage+1
+            stage = stage + 1
         if raw_next_model_id <= 0:
             return 0
         elif raw_next_model_id >= self.num_of_models[stage]:
@@ -123,7 +122,7 @@ class StagedModel(BaseModel):
             return raw_next_model_id
 
     def find_closed_prev_model_id(self, next_model_id, stage):
-        while(self.models[stage][next_model_id] is None):
+        while (self.models[stage][next_model_id] is None):
             next_model_id = next_model_id - 1
         return next_model_id
 
@@ -140,9 +139,11 @@ class StagedModel(BaseModel):
             else:
                 # leaf node reached
                 # the output from the model is the predicted position directly
-                next_model_id = self.acceptable_next_model(
-                    next_model_id, stage, isLeaf=True)
-                next_model_id = self.find_closed_prev_model_id(next_model_id,stage)
+                next_model_id = self.acceptable_next_model(next_model_id,
+                                                           stage,
+                                                           isLeaf=True)
+                next_model_id = self.find_closed_prev_model_id(
+                    next_model_id, stage)
                 final_output = self.models[stage][next_model_id].predict(key)
         return int(final_output)
 
