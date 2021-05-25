@@ -11,9 +11,8 @@ from src.indexing.models import BaseModel
 
 
 class PRModel(BaseModel):
-    def __init__(self, degree, page_size) -> None:
-        super().__init__("Polynomial Regression with degree {}".format(degree),
-                         page_size)
+    def __init__(self, degree) -> None:
+        super().__init__("Polynomial Regression with degree {}".format(degree))
         self.model = PolynomialRegression(degree)
 
     def train(self, x_train, y_train, x_test, y_test):
@@ -26,3 +25,13 @@ class PRModel(BaseModel):
 
     def predict(self, key):
         return self.model.predict(key)
+
+    def export(self):
+        return {
+            "interval": [0.0, 1.0],
+            "models": [{
+                "operator": "polynomial",
+                "parameter": self.model.coeffs.tolist(),
+                "degree": self.model.degree
+            }]
+        }

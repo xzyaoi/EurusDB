@@ -47,7 +47,7 @@ class BTree():
 
     def search(self, key) -> Tuple[bool, int, Item]:
         '''
-        Search tries to find the key in the current node, 
+        Search tries to find the key in the current node,
         Parameters
         -----------
             key: [any] the requested key value
@@ -56,7 +56,7 @@ class BTree():
             position:  [int] the smallest index i in the sorted array such that
                              key <= self.items[i]
             val: [Item] the value found in the items
-            * if there's no such key equals to the look-up key 
+            * if there's no such key equals to the look-up key
                 reurn False, smallest higher key and None
         '''
         current = self.root

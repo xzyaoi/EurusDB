@@ -8,8 +8,8 @@ from timeit import default_timer as timer
 import numpy as np
 
 import src.indexing.utilities.metrics as metrics
-from src.indexing.learning.fully_connected_network import FullyConnectedNetwork
-# from src.indexing.learning.pt_fcn import FullyConnectedNetwork
+#from src.indexing.learning.fully_connected_network import FullyConnectedNetwork
+from src.indexing.learning.pt_fcn import FullyConnectedNetwork
 from src.indexing.models import BaseModel
 from src.indexing.utilities.dataloaders import normalize
 
@@ -19,9 +19,8 @@ class FCNModel(BaseModel):
                  layers=[1, 32, 1],
                  activations=['relu', 'relu'],
                  epochs=1000,
-                 page_size=32,
                  lr=0.01) -> None:
-        super().__init__('Fully Connected Neural Network', page_size)
+        super().__init__('Fully Connected Neural Network')
         self.net = FullyConnectedNetwork(layers, activations, lr=lr)
         self.has_normalized = False
         self.epochs = epochs

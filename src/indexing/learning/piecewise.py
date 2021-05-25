@@ -4,8 +4,6 @@
 # https://opensource.org/licenses/MIT
 
 import numpy as np
-from matplotlib.pyplot import xlabel
-from numpy.core.fromnumeric import mean
 
 from src.indexing.utilities.metrics import mean_squared_error
 
@@ -14,6 +12,7 @@ class PiecewiseRegression():
     '''
     This class describes a regression model by piecewise linear function
     '''
+
     def __init__(self,
                  num_of_breakpoints=5,
                  stop_threshold=1e-5,
@@ -100,7 +99,7 @@ class PiecewiseRegression():
         return previous_error
 
     def predict(self, x):
-        if not type(x) is np.ndarray:
+        if not isinstance(x, np.ndarray):
             A = self._construct_A(self.betas, np.array([x]))
         else:
             A = self._construct_A(self.betas, x)

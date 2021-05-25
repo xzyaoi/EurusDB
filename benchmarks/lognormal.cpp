@@ -1,5 +1,5 @@
 // Copyright (c) 2021 Xiaozhe Yao et al.
-// 
+//
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
@@ -11,14 +11,15 @@
 #include <set>
 #include <vector>
 
-int main(int argc, char ** argv) {
+int main(int argc, char **argv)
+{
   int nelements = 190000000;
   if (argc > 2)
-    {
-        std::cerr<<"Wrong Number of Arguments"<<std::endl;
-    }
+  {
+    std::cerr << "Wrong Number of Arguments" << std::endl;
+  }
   nelements = atoi(argv[1]);
-  std::cout<<"Generating %d elements..."<<nelements<<std::endl;
+  std::cout << "Generating %d elements..." << nelements << std::endl;
   double scale = 1e+9;
   double max = double(INT_MAX) / scale;
   int block_size = 10;
@@ -28,11 +29,14 @@ int main(int argc, char ** argv) {
 
   std::set<int> samples;
 
-  while (samples.size() < nelements) {
+  while (samples.size() < nelements)
+  {
     double r = dist(rng);
-    if (r > max) continue;
+    if (r > max)
+      continue;
     samples.insert(int(r * scale));
-    if (samples.size() % 1000000 == 0) {
+    if (samples.size() % 1000000 == 0)
+    {
       std::cerr << "Generated " << samples.size() << std::endl;
     }
   }
@@ -45,7 +49,8 @@ int main(int argc, char ** argv) {
   std::ofstream myfile;
   myfile.open("data/1d_lognormal_" + std::to_string(nelements) + ".csv");
   myfile << "val,block\n";
-  for (std::vector<int>::size_type i = 1; i != vec.size(); i++) {
+  for (std::vector<int>::size_type i = 1; i != vec.size(); i++)
+  {
     myfile << std::to_string(vec[i] - vec[0] + 1) + "," +
                   std::to_string(i / block_size) + "\n";
   }

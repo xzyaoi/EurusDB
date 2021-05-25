@@ -1,0 +1,9 @@
+EurusDB
+=======
+The Fully Learned Database for Online Analytical Processing.
+
+The issue tracker is for reporting bugs only. For general discussions, please go to 
+
+https://discord.gg/jmyz2Xxf6H
+
+The documentation can be build with ``make htmldocs``. To build the documentation, you need to have python3 and yarn (the package manager for node.js) installed.

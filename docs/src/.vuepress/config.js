@@ -46,9 +46,9 @@ module.exports = {
       '/guide/': [
         {
           title: 'Guide',
-          collapsable: false,
+          collapsable: true,
           children: [
-            '',
+            'ir_format',
           ]
         }
       ],

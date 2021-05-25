@@ -1,5 +1,5 @@
 // Copyright (c) 2021 Xiaozhe Yao et al.
-// 
+//
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
@@ -16,7 +16,7 @@ pub enum Error {
     Parse(String),
     ReadOnly,
     Serialization,
-    Value(String)
+    Value(String),
 }
 
 impl std::error::Error for Error {}

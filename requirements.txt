@@ -12,3 +12,8 @@ pwlf
 # documentation
 pdoc3
 pwlf
+rich
+# formatting
+yapf
+autoflake
+isort
