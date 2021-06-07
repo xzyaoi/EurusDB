@@ -19,8 +19,8 @@ int main(int argc, char **argv)
     std::cerr << "Wrong Number of Arguments" << std::endl;
   }
   nelements = atoi(argv[1]);
-  std::cout << "Generating %d elements..." << nelements << std::endl;
-  double scale = 1e+9;
+  std::cout << "Generating "<<nelements<< " elements..." << std::endl;
+  double scale = 1e+11;
   double max = double(INT_MAX) / scale;
   int block_size = 10;
   std::mt19937 rng;
