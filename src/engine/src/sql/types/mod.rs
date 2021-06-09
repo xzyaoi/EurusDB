@@ -6,13 +6,13 @@
 mod expression;
 pub use expression::Expression;
 
-use crate::error::{Error, Result};
+use crate::utility::error::{Error, Result};
 
 use serde_derive::{Deserialize, Serialize};
 
 use std::borrow::Cow;
 use std::cmp::Ordering;
-use std::hash::{HAsh, Hasher};
+use std::hash::{Hash, Hasher};
 
 #[derive(Clone, Debug, Hash, PartialEq, Serialize, Deserialize)]
 pub enum DataType {

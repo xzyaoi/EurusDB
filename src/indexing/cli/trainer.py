@@ -5,14 +5,19 @@
 import pandas as pd
 
 from src.indexing.models.ml.polynomial_regression import PRModel
+from src.indexing.models.ml.rdp_polylines import RDPModel
 from src.indexing.utilities.trainer import ModelTrainer
 
 
 def train(args):
     models = []
-    if args['polynomial']:
+    if 'polynomial' in args:
         model = PRModel(args['polynomial']['degree'])
         model.savepath = args['polynomial']['savepath']
+        models.append(model)
+    if 'rdp' in args:
+        model = RDPModel(args['rdp']['epsilon'])
+        model.savepath = args['rdp']['savepath']
         models.append(model)
     trainer = ModelTrainer(models)
     data = pd.read_csv(args['filepath'])
@@ -31,7 +36,11 @@ if __name__ == "__main__":
             "degree": 1,
             "savepath": "models/polynomial.json"
         },
-        "filepath": "data/1d_normal_10000.csv",
+        "rdp": {
+            "epsilon": 0.01,
+            "savepath": "models/rdp.json"
+        },
+        "filepath": "data/1d_lognormal_1000000.csv",
         "test_ratio": 0.3,
         "use_index": True,
         "sample_ratio": 1

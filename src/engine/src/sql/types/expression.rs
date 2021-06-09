@@ -1,10 +1,10 @@
 // Copyright (c) 2021 Xiaozhe Yao et al.
-// 
+//
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
 use super::{Row, Value};
-use crate::error::{Error, Result};
+use crate::utility::error::{Error, Result};
 
 use regex::Regex;
 use serde_derive::{Deserialize, Serialize};
@@ -16,7 +16,7 @@ pub enum Expression {
     // Values
     Constant(Value),
     Field(usize, Option<(Option<String>, String)>),
-    
+
     // Logical Operations
     And(Box<Expression>, Box<Expression>),
     Not(Box<Expression>),
@@ -553,5 +553,3 @@ impl Display for Expression {
         write!(f, "{}", s)
     }
 }
-
-

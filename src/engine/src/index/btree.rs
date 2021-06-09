@@ -3,66 +3,54 @@
 // This software is released under the MIT License.
 // https://opensource.org/licenses/MIT
 
-use std::cmp::Ordering;
+use storage::kv::{Range, Scan, Store};
+use utility::error::{Result};
+use std::collections::BTreeMap;
 use std::fmt::Display;
-use std::mem::replace;
-use std::ops::{Bound, Deref, DerefMut};
-use std::sync::{Arc, RwLock};
 
-const DEFAULT_ORDER: usize=8;
-
-#[derive(Debug, PartialEq)]
-enum Node {
-    Root(Children),
-    Inner(Children),
-    Leaf(Values),
+pub struct BTreeIndex {
+    data: BTreeMap<Vec<u8>, Vec<u8>>,
 }
 
-#[derive(Debug, PartialEq)]
-enum Children {
-    keys: Vec<Vec<u8>>,
-    nodes: Vec<Node>,
-}
-
-#[derive(Debug, PartialEq)]
-struct Values(Vec<(Vec<u8>, Vec<u8>)>);
-
-impl Node {
-    fn delete(&mut self, key: &[u8]) {
-        match self {
-            Self::Root(children) => {
-                children.delete(key);
-                while children.len() == 1 {
-
-                }
-            }
+impl BTreeIndex {
+    pub fn new() -> Self {
+        Self {
+            data: BTreeMap::new()
         }
     }
-    fn get(&self, key: &[u8]) {
+}
 
-    }
-    // Fetches the first key/value pair
-    fn first(&self) {
-
-    }
-    // Fetches the last key/value pair
-    fn last(&self) {
-
+impl Display for BTreeIndex {
+    fn fmt(&self, f:&mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "B-Tree Index")
     }
 }
 
-impl Children {
-    fn new(order: usize) -> Self {
-
+impl Store for BTreeIndex {
+    fn flush(&mut self) -> Result<()> {
+        Ok(())
     }
-    fn empty() -> Self {
 
+    fn delete(&mut self, key: &[u8]) -> Result<()> {
+        self.data.remove(key);
+        Ok(())
     }
-    fn delete(&mut self, key: &[u8]) {
 
-    }
-    fn get(&self, key: &[u8]) -> Option <Vec<u8>> {
-
+    fn get(&self, key: &[u8]) -> Result<Option<Vec<u8>>> {
+        Ok(self.data.get(key).cloned())
     }
     
+    fn scan(&self, range: Range) -> Scan {
+        Box::new(
+            self.data.range(range)
+            .map(|(k, v)| Ok((k.clone(), v.clone())))
+            .collect::<Vec<_>>()
+            .into_iter(),
+        )
+    }
+
+    fn set(&mut self, key:&[u8], value: Vec<u8>) -> Result<()> {
+        self.data.insert(key.to_vec(), value);;
+        Ok(())
+    }
 }

@@ -17,3 +17,4 @@ rich
 yapf
 autoflake
 isort
+autopep8
